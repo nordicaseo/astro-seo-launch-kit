@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>SEO Fix Session — live</title>
+  <style>
+    :root{--bg:#0b0f17;--panel:#121826;--panel2:#161d2e;--border:#232c40;--text:#e6ebf4;--muted:#8a96ad;--brand:#6d8bff;--brand2:#8a6dff;--pass:#2fbf71;--warn:#e9a93c;--fail:#ef5d5d;--info:#5aa9e6}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(1200px 600px at 70% -10%,#16213a 0%,var(--bg) 55%);color:var(--text);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+    .wrap{max-width:860px;margin:0 auto;padding:26px 20px 90px}
+    .top{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+    .logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;font-size:18px}
+    .top h1{font-size:17px;margin:0;font-weight:700}
+    .top small{display:block;color:var(--muted);font-weight:500;font-size:12px}
+    .live{margin-left:auto;display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}
+    .live .dot{width:8px;height:8px;border-radius:50%;background:var(--pass);box-shadow:0 0 0 0 rgba(47,191,113,.6);animation:pulse 1.6s infinite}
+    .live.done .dot{background:var(--muted);animation:none}
+    @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,191,113,.5)}70%{box-shadow:0 0 0 7px rgba(47,191,113,0)}100%{box-shadow:0 0 0 0 rgba(47,191,113,0)}}
+
+    .summary{display:grid;grid-template-columns:128px 1fr;gap:22px;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px}
+    .ring{--val:0;--col:var(--muted);width:118px;height:118px;border-radius:50%;background:conic-gradient(var(--col) calc(var(--val)*1%),#1d2536 0);display:grid;place-items:center;position:relative}
+    .ring::before{content:"";position:absolute;inset:11px;border-radius:50%;background:var(--panel)}
+    .ring b{position:relative;font-size:30px}.ring span{position:relative;display:block;text-align:center;color:var(--muted);font-size:11px;margin-top:-4px}
+    .meta .tgt{font-weight:700;font-size:15px;word-break:break-all}
+    .delta{display:flex;align-items:center;gap:10px;margin:8px 0 12px;color:var(--muted);font-size:13px}
+    .delta b{color:var(--text);font-size:15px}
+    .arrow{color:var(--brand)}
+    .bar{height:9px;border-radius:999px;background:#1d2536;overflow:hidden}
+    .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pass),#39d98a);transition:width .5s}
+    .barlbl{font-size:12px;color:var(--muted);margin-top:6px}
+
+    .feed{margin-top:22px;display:flex;flex-direction:column;gap:10px}
+    .ev{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:13px 15px;display:grid;grid-template-columns:26px 1fr;gap:12px;animation:in .25s ease}
+    @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+    .ev .ic{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-size:13px;background:#1d2536}
+    .ev .t{font-weight:600}
+    .ev .d{color:var(--muted);font-size:13.5px;margin-top:3px}
+    .ev .ts{color:var(--muted);font-size:11px;float:right;font-weight:400}
+    .ev pre{background:#0e1422;border:1px solid var(--border);border-radius:8px;padding:10px;margin:8px 0 0;overflow-x:auto;font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap}
+    .badge{font-size:10.5px;padding:2px 7px;border-radius:999px;border:1px solid var(--border);color:var(--muted);margin-left:6px}
+    .badge.critical{color:#ffd0d0;background:#2a1717;border-color:#5a2a2a}
+    .badge.high{color:#ffe6c2;background:#261d11;border-color:#5a4326}
+    .files{margin-top:6px;font-size:12px;color:var(--info);font-family:ui-monospace,Menlo,Consolas,monospace}
+    .ic.start{background:#23314f;color:#bcd}.ic.audit{background:#22304a;color:#9cf}.ic.finding{background:#3a2a12;color:#ffd089}
+    .ic.fixing{background:#2b2540;color:#c5b3ff}.ic.fixed{background:#143324;color:#5fe39a}.ic.note{background:#1d2536;color:#9aa}.ic.done{background:#143324;color:#5fe39a}
+    .empty{color:var(--muted);text-align:center;padding:50px 0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <span class="logo">🚀</span>
+      <div><h1>SEO Fix Session</h1><small id="started">waiting for the agent…</small></div>
+      <div class="live" id="live"><span class="dot"></span><span id="livetxt">live</span></div>
+    </div>
+
+    <div class="summary" id="summary" style="display:none">
+      <div class="ring" id="ring"><div><b id="score">–</b><span>/ 100</span></div></div>
+      <div class="meta">
+        <div class="tgt" id="target"></div>
+        <div class="delta" id="delta"></div>
+        <div class="bar"><i id="barfill"></i></div>
+        <div class="barlbl" id="barlbl"></div>
+      </div>
+    </div>
+
+    <div class="feed" id="feed"><div class="empty" id="empty">No activity yet. The agent will report findings and fixes here as it works.</div></div>
+  </div>
+
+  <script>
+    let since = -1;
+    const feed = document.getElementById('feed');
+    const empty = document.getElementById('empty');
+    const esc = (s) => String(s ?? '').replace(/[&<>]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+    const ICON = { start:['start','▶'], audit:['audit','📊'], finding:['finding','🔍'], fixing:['fixing','🔧'], fixed:['fixed','✅'], note:['note','💬'], done:['done','🎉'] };
+    const time = (ts) => { try { return new Date(ts).toLocaleTimeString(); } catch { return ''; } };
+
+    function scoreColor(s){ return s>=90?'var(--pass)':s>=70?'var(--warn)':'var(--fail)'; }
+
+    function renderEvent(e){
+      if (empty) { empty.remove(); }
+      const [cls, ic] = ICON[e.type] || ['note','•'];
+      const el = document.createElement('div');
+      el.className = 'ev';
+      let title = e.title || '';
+      if (e.type === 'audit') title = `Audit complete — score ${e.score}/100` + (typeof e.failCount==='number' ? ` · ${e.failCount} issue${e.failCount===1?'':'s'}` : '');
+      if (e.type === 'done' && !title) title = 'Session complete';
+      let sev = e.severity ? `<span class="badge ${esc(e.severity)}">${esc(e.severity)}</span>` : '';
+      let body = '';
+      if (e.detail) body += `<div class="d">${esc(e.detail)}</div>`;
+      if (e.message && e.type!=='note') body += `<div class="d">${esc(e.message)}</div>`;
+      if (e.type==='note' && e.message) title = e.message;
+      if (e.diff) body += `<pre>${esc(e.diff)}</pre>`;
+      if (e.files) body += `<div class="files">${esc(Array.isArray(e.files)?e.files.join('  ·  '):e.files)}</div>`;
+      el.innerHTML = `<div class="ic ${cls}">${ic}</div><div><span class="ts">${time(e.ts)}</span><div class="t">${esc(title)}${sev}</div>${body}</div>`;
+      feed.appendChild(el);
+    }
+
+    function updateSummary(s){
+      if (s.currentScore==null && s.startScore==null) return;
+      document.getElementById('summary').style.display='grid';
+      const cur = s.currentScore ?? s.startScore;
+      const ring = document.getElementById('ring');
+      ring.style.setProperty('--val', cur); ring.style.setProperty('--col', scoreColor(cur));
+      document.getElementById('score').textContent = cur;
+      document.getElementById('target').textContent = s.target || '';
+      const delta = document.getElementById('delta');
+      if (s.startScore!=null && s.currentScore!=null && s.auditCount>1){
+        delta.innerHTML = `<span>started</span><b>${s.startScore}</b><span class="arrow">→</span><b>${s.currentScore}</b><span>now</span>`;
+      } else {
+        delta.innerHTML = `<span>baseline</span><b>${cur}</b>`;
+      }
+      if (s.baselineFails){
+        const pct = Math.min(100, Math.round((s.fixedCount / s.baselineFails) * 100));
+        document.getElementById('barfill').style.width = pct + '%';
+        document.getElementById('barlbl').textContent = `${s.fixedCount} of ${s.baselineFails} flagged issues addressed`;
+      }
+      if (s.startedAt) document.getElementById('started').textContent = 'started ' + time(s.startedAt);
+      if (s.done){ const l=document.getElementById('live'); l.className='live done'; document.getElementById('livetxt').textContent='finished'; }
+    }
+
+    async function poll(){
+      try{
+        const r = await fetch('/api/session?since='+since,{cache:'no-store'});
+        const d = await r.json();
+        for (const e of d.events){ since = Math.max(since, e.i); renderEvent(e); }
+        if (d.events.length) window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+        updateSummary(d.summary);
+      }catch(_){}
+    }
+    poll(); setInterval(poll, 1300);
+  </script>
+</body>
+</html>

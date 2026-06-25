@@ -70,6 +70,16 @@ This repo ships a [Claude Code](https://claude.com/claude-code) skill. Point Cla
 
 The agent runs the auditor, triages by severity, **fixes the issues in your codebase**, verifies the manual items, and re-runs until the score is green. See [`SKILL.md`](./.claude/skills/astro-seo-audit/SKILL.md).
 
+### Watch it work — live fix dashboard
+
+While the agent fixes your site, it narrates into a zero-build live dashboard you can watch:
+
+```bash
+astro-seo-audit serve        # → http://localhost:4330
+```
+
+You'll see findings, fixes, and diffs stream in ("You have no XML sitemap — adding it…", "Sitemap added ✅"), with the **score climbing before → after** and a progress bar of issues addressed. The agent drives it with the `report` / `--session` commands (see the skill); you just keep the tab open.
+
 ---
 
 ## How the auditor works

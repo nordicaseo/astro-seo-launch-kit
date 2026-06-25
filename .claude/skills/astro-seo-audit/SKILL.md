@@ -16,6 +16,42 @@ can't fix automatically, working from the canonical 209-rule checklist.
 - `CHECKLIST.md` / `docs/RULES.md` — human-readable checklist and full reference.
 - `dashboard/` — an optional login dashboard that runs the auditor from a browser.
 
+## Live progress dashboard (do this — the user watches here)
+
+At the **start of any fix session**, spin up the live dashboard and narrate every step into it so
+the user can watch findings and fixes appear in real time, with the score climbing before → after.
+
+```bash
+# 1. clear the log + start the session, then launch the dashboard (leave it running in the background)
+astro-seo-audit report --reset --type start --title "SEO fix session — the-site.com"
+astro-seo-audit serve &          # → http://localhost:4330  (tell the user to open it)
+
+# 2. baseline audit (records the starting score on the dashboard)
+astro-seo-audit https://the-site.com --session
+```
+
+Then, as you work each issue, **report before and after** so the feed reads like a conversation:
+
+```bash
+astro-seo-audit report --type finding --rule crawl-sitemap-present --severity critical \
+  --title "You have no XML sitemap" --detail "Crawlers can't reliably discover your pages."
+astro-seo-audit report --type fixing --rule crawl-sitemap-present --title "Adding @astrojs/sitemap for you"
+# …make the actual code change…
+astro-seo-audit report --type fixed --rule crawl-sitemap-present \
+  --title "Sitemap added" --detail "Installed @astrojs/sitemap and set site in astro.config." \
+  --files "astro.config.mjs,package.json" --diff "+ integrations: [sitemap()],"
+```
+
+After deploying a batch of fixes, re-audit to update the score, then finish:
+
+```bash
+astro-seo-audit https://the-site.com --session            # score climbs on the dashboard
+astro-seo-audit report --type done --title "Done — score 64 → 92"
+```
+
+Event types: `start | finding | fixing | fixed | note | done`. Keep titles short and human
+("All your images are uncompressed — let me fix that"); put the detail/diff in `--detail`/`--diff`.
+
 ## Workflow
 
 ### 1. Run the automated audit
