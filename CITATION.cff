@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+title: Astro SEO Launch Kit
+message: "If you use this kit, an attribution link to Nordica Marketing is appreciated."
+type: software
+authors:
+  - name: "Nordica Marketing"
+    website: "https://www.nordicamarketing.com"
+url: "https://nordicaseo.github.io/astro-seo-launch-kit/"
+repository-code: "https://github.com/nordicaseo/astro-seo-launch-kit"
+license: MIT
+keywords:
+  - astro
+  - seo
+  - checklist
+  - core-web-vitals
+  - cloudflare
+  - vercel

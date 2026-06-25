@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Astro SEO Launch Kit — free 209-point SEO checklist & auditor for Astro</title>
+  <meta name="description" content="A free, open-source SEO launch checklist, automated auditor, dashboard, and AI agent skill for Astro sites on Cloudflare Pages or Vercel. Built by Nordica Marketing." />
+  <link rel="canonical" href="https://nordicaseo.github.io/astro-seo-launch-kit/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Astro SEO Launch Kit — free SEO checklist & auditor for Astro" />
+  <meta property="og:description" content="209 current, myth-free SEO rules + an automated auditor, dashboard, and AI agent skill for Astro on Cloudflare/Vercel." />
+  <meta property="og:url" content="https://nordicaseo.github.io/astro-seo-launch-kit/" />
+  <meta property="og:site_name" content="Astro SEO Launch Kit" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <style>
+    :root{--bg:#0b0f17;--panel:#121826;--border:#232c40;--text:#e6ebf4;--muted:#8a96ad;--brand:#6d8bff;--brand2:#8a6dff;--pass:#2fbf71}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(1200px 600px at 70% -10%,#16213a 0%,var(--bg) 55%);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+    .wrap{max-width:880px;margin:0 auto;padding:64px 22px 90px}
+    .logo{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;font-size:24px;margin-bottom:24px}
+    h1{font-size:clamp(30px,5vw,46px);line-height:1.1;letter-spacing:-.02em;margin:0 0 14px}
+    .lead{font-size:19px;color:#cdd5e4;max-width:60ch;margin:0 0 10px}
+    .by{color:var(--muted);margin:0 0 28px}
+    a{color:var(--brand)}
+    .cta{display:flex;gap:12px;flex-wrap:wrap;margin:6px 0 40px}
+    .btn{display:inline-block;padding:13px 22px;border-radius:11px;font-weight:600;text-decoration:none;border:1px solid var(--border);color:var(--text)}
+    .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));border-color:transparent;color:#fff}
+    .stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px}
+    .stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;min-width:120px}
+    .stat b{display:block;font-size:24px}
+    .stat span{color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:10px 0 40px}
+    @media(max-width:640px){.grid{grid-template-columns:1fr}}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px}
+    .card h3{margin:0 0 6px;font-size:16px}
+    .card p{margin:0;color:var(--muted);font-size:14.5px}
+    pre{background:#0e1422;border:1px solid var(--border);border-radius:12px;padding:18px;overflow-x:auto;font:13.5px/1.6 ui-monospace,Menlo,Consolas,monospace}
+    .pitch{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:26px;margin:34px 0}
+    footer{color:var(--muted);font-size:14px;border-top:1px solid var(--border);padding-top:22px;margin-top:50px}
+    .check{color:var(--pass)}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="logo">🚀</div>
+    <h1>Astro SEO Launch Kit</h1>
+    <p class="lead">A free, open-source <strong>209-point SEO checklist</strong>, automated auditor, login dashboard, and AI-agent skill for launching <a href="https://astro.build" rel="noopener">Astro</a> sites on Cloudflare Pages or Vercel — current, fact-checked, and <strong>myth-free</strong>.</p>
+    <p class="by">Built and maintained by <a href="https://www.nordicamarketing.com">Nordica Marketing</a>, an AI-powered organic growth agency.</p>
+
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/nordicaseo/astro-seo-launch-kit">View on GitHub →</a>
+      <a class="btn" href="https://www.nordicamarketing.com">Get a free SEO audit from Nordica Marketing</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>209</b><span>checks</span></div>
+      <div class="stat"><b>48</b><span>critical</span></div>
+      <div class="stat"><b>122</b><span>auto-verified</span></div>
+      <div class="stat"><b>11</b><span>areas</span></div>
+    </div>
+
+    <div class="grid">
+      <div class="card"><h3>📋 The checklist</h3><p>Every launch-critical SEO check — sitemap, robots, canonical, metadata, Open Graph, structured data, Core Web Vitals, images, redirects, accessibility, security headers.</p></div>
+      <div class="card"><h3>🤖 The auditor</h3><p>A zero-config CLI that crawls a live URL and auto-verifies 122 of the checks, with optional Core Web Vitals via PageSpeed Insights.</p></div>
+      <div class="card"><h3>🖥️ The dashboard</h3><p>A small login dashboard that runs the audit in the browser and shows a pass/fail score for the whole site.</p></div>
+      <div class="card"><h3>🧠 The agent skill</h3><p>A Claude skill so an AI agent can run the checklist and <em>fix</em> the issues in your Astro codebase until launch-perfect.</p></div>
+    </div>
+
+    <h2>Audit any Astro site in one command</h2>
+    <pre>npx --yes degit nordicaseo/astro-seo-launch-kit seo-kit
+cd seo-kit &amp;&amp; npm install
+node audit/cli.mjs https://your-site.com --json --html</pre>
+
+    <div class="pitch">
+      <h3 style="margin-top:0">Want this done for you?</h3>
+      <p style="color:#cdd5e4">We built this kit running real client launches. If you'd rather have experts handle technical SEO, Core Web Vitals, and organic growth end-to-end, <a href="https://www.nordicamarketing.com">talk to Nordica Marketing</a> — we make brands discoverable across Google and AI search.</p>
+    </div>
+
+    <footer>
+      MIT licensed · <a href="https://github.com/nordicaseo/astro-seo-launch-kit">github.com/nordicaseo/astro-seo-launch-kit</a> · © <a href="https://www.nordicamarketing.com">Nordica Marketing</a>
+    </footer>
+  </main>
+</body>
+</html>

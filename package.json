@@ -5,6 +5,15 @@
   "type": "module",
   "description": "A comprehensive, current, myth-free SEO launch checklist + automated auditor + dashboard for Astro sites on Cloudflare Pages or Vercel.",
   "license": "MIT",
+  "author": "Nordica Marketing (https://www.nordicamarketing.com)",
+  "homepage": "https://nordicaseo.github.io/astro-seo-launch-kit/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nordicaseo/astro-seo-launch-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nordicaseo/astro-seo-launch-kit/issues"
+  },
   "workspaces": [
     "audit",
     "dashboard"

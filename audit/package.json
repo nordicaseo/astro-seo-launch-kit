@@ -3,6 +3,13 @@
   "type": "module",
   "version": "1.0.0",
   "description": "Automated SEO audit engine + CLI for Astro sites on Cloudflare/Vercel. Runs the Astro SEO Launch Kit checklist against a live URL.",
+  "author": "Nordica Marketing (https://www.nordicamarketing.com)",
+  "homepage": "https://nordicaseo.github.io/astro-seo-launch-kit/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nordicaseo/astro-seo-launch-kit.git",
+    "directory": "audit"
+  },
   "bin": {
     "astro-seo-audit": "./cli.mjs"
   },
