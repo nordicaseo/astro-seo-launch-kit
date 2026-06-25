@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Log in · Astro SEO Dashboard">
+  <div class="wrap">
+    <form class="panel login-card" id="login-form">
+      <div class="brand" style="margin-bottom:18px">
+        <span class="logo">🚀</span>
+        <div>Astro SEO Launch<small>Pre-flight dashboard</small></div>
+      </div>
+      <h1>Log in</h1>
+      <p>Enter the dashboard password to run audits.</p>
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" autofocus required />
+      <button class="btn btn-primary" type="submit" id="login-btn">Log in</button>
+      <p class="error" id="login-error" style="display:none"></p>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('login-form');
+    const errEl = document.getElementById('login-error');
+    const btn = document.getElementById('login-btn');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errEl.style.display = 'none';
+      btn.disabled = true;
+      const password = document.getElementById('password').value;
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ password }),
+        });
+        if (res.ok) { window.location.href = '/'; return; }
+        const data = await res.json().catch(() => ({}));
+        errEl.textContent = data.error || 'Login failed.';
+        errEl.style.display = 'block';
+      } catch (err) {
+        errEl.textContent = 'Network error.';
+        errEl.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  </script>
+</Layout>

@@ -1,0 +1,32 @@
+{
+  "name": "astro-seo-launch-kit",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A comprehensive, current, myth-free SEO launch checklist + automated auditor + dashboard for Astro sites on Cloudflare Pages or Vercel.",
+  "license": "MIT",
+  "workspaces": [
+    "audit",
+    "dashboard"
+  ],
+  "scripts": {
+    "audit": "node audit/cli.mjs",
+    "build:checklist": "node scripts/build-checklist.mjs",
+    "dashboard": "npm --workspace @astro-seo-launch-kit/dashboard run dev",
+    "dashboard:build": "npm --workspace @astro-seo-launch-kit/dashboard run build"
+  },
+  "engines": {
+    "node": ">=18.18"
+  },
+  "keywords": [
+    "astro",
+    "seo",
+    "checklist",
+    "audit",
+    "core-web-vitals",
+    "cloudflare",
+    "vercel",
+    "sitemap",
+    "structured-data"
+  ]
+}

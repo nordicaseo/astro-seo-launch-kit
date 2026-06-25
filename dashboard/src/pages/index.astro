@@ -1,0 +1,137 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEnv } from '../lib/auth';
+const defaultTarget = getEnv('DEFAULT_TARGET', Astro.locals) ?? '';
+---
+
+<Layout>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <span class="logo">🚀</span>
+        <div>Astro SEO Launch<small>Pre-flight audit dashboard</small></div>
+      </div>
+      <a class="btn btn-ghost" href="/api/logout">Log out</a>
+    </div>
+
+    <form id="audit-form" class="panel audit-form">
+      <div class="field">
+        <label for="target">Site URL</label>
+        <input id="target" name="target" type="url" placeholder="https://your-site.com" value={defaultTarget} required />
+      </div>
+      <div style="display:flex; align-items:flex-end;">
+        <button class="btn btn-primary" type="submit" id="run-btn">Run audit</button>
+      </div>
+    </form>
+
+    <div id="status" class="center muted" style="padding:24px; display:none;"></div>
+    <div id="results"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('audit-form');
+    const statusEl = document.getElementById('status');
+    const resultsEl = document.getElementById('results');
+    const runBtn = document.getElementById('run-btn');
+
+    const ICON = { pass: '✓', fail: '✕', warn: '!', manual: '◐', skip: '–' };
+    const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    let current = null;
+    let activeFilter = 'all';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const target = document.getElementById('target').value.trim();
+      if (!target) return;
+      runBtn.disabled = true;
+      resultsEl.innerHTML = '';
+      statusEl.style.display = 'block';
+      statusEl.innerHTML = '<span class="spinner"></span> &nbsp;Auditing <b>' + esc(target) + '</b> — fetching pages and running checks…';
+      try {
+        const res = await fetch('/api/audit', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ target }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+        current = data;
+        activeFilter = 'all';
+        render();
+      } catch (err) {
+        statusEl.innerHTML = '<span style="color:var(--fail)">Audit failed: ' + esc(err.message) + '</span>';
+      } finally {
+        runBtn.disabled = false;
+      }
+    });
+
+    function scoreColor(s) { return s >= 90 ? 'var(--pass)' : s >= 70 ? 'var(--warn)' : 'var(--fail)'; }
+
+    function render() {
+      const r = current;
+      statusEl.style.display = 'none';
+      const t = r.totals;
+      const col = scoreColor(r.score);
+
+      let html = '';
+      html += '<div class="panel summary" style="margin-top:22px">';
+      html += '  <div class="score-ring" style="--val:' + r.score + '; --col:' + col + '">';
+      html += '    <div class="num">' + r.score + '</div><div class="lbl">/ 100</div>';
+      html += '  </div>';
+      html += '  <div>';
+      html += '    <div style="font-weight:700; font-size:16px; margin-bottom:4px;">' + esc(r.target) + '</div>';
+      html += '    <div class="muted" style="font-size:12.5px; margin-bottom:12px;">Audited ' + (r.pagesAudited?.length || 1) + ' page(s) · ' + new Date(r.generatedAt).toLocaleString() + '</div>';
+      html += '    <div class="totals">';
+      html += pill('pass', t.pass, 'Passed') + pill('fail', t.fail, 'Failed') + pill('warn', t.warn, 'Warnings') + pill('manual', t.manual, 'Manual') + pill('skip', t.skip, 'Skipped');
+      html += '    </div>';
+      html += '  </div>';
+      html += '</div>';
+
+      // Filters
+      html += '<div class="panel filters" style="margin-top:14px">';
+      for (const [k, lbl] of [['all', 'All'], ['fail', 'Failed'], ['warn', 'Warnings'], ['manual', 'Manual'], ['pass', 'Passed']]) {
+        html += '<span class="chip ' + (activeFilter === k ? 'active' : '') + '" data-filter="' + k + '">' + lbl + '</span>';
+      }
+      html += '</div>';
+
+      for (const sec of r.sections) {
+        const rows = sec.results.filter((x) => activeFilter === 'all' || x.status === activeFilter);
+        if (!rows.length) continue;
+        const failCount = sec.results.filter((x) => x.status === 'fail').length;
+        html += '<div class="section"><h2>' + esc(sec.name) + ' <span class="count">' + sec.results.length + ' checks' + (failCount ? ' · ' + failCount + ' failed' : '') + '</span></h2>';
+        html += '<div class="panel">';
+        for (const x of rows) html += rowHtml(x);
+        html += '</div></div>';
+      }
+
+      resultsEl.innerHTML = html;
+      resultsEl.querySelectorAll('.chip').forEach((c) =>
+        c.addEventListener('click', () => { activeFilter = c.dataset.filter; render(); })
+      );
+    }
+
+    function pill(kind, n, label) {
+      return '<span class="pill"><span class="dot ' + kind + '"></span>' + (n ?? 0) + ' ' + label + '</span>';
+    }
+
+    function rowHtml(x) {
+      let h = '<div class="row">';
+      h += '<div class="status ' + x.status + '" title="' + x.status + '">' + (ICON[x.status] || '?') + '</div>';
+      h += '<div><div class="title">' + esc(x.title) + '</div><div class="meta">';
+      if (x.severity === 'critical' || x.severity === 'high') h += '<span class="badge sev-' + x.severity + '">' + x.severity + '</span>';
+      h += '<span class="badge">' + esc(x.id) + '</span></div>';
+      if (x.detail) h += '<div class="detail">' + esc(x.detail) + '</div>';
+      if (x.evidence) h += '<div class="detail" style="font-family:var(--mono); font-size:12px;">' + esc(x.evidence) + '</div>';
+      if (x.fix && (x.status === 'fail' || x.status === 'warn' || x.status === 'manual')) {
+        h += '<div class="fix"><details><summary>How to fix</summary><pre>' + esc(x.fix) + '</pre>';
+        if (x.docs) h += '<a href="' + esc(x.docs) + '" target="_blank" rel="noopener">Docs ↗</a>';
+        h += '</details></div>';
+      }
+      h += '</div>';
+      h += '<div class="right">' + esc(x.severity) + '</div>';
+      h += '</div>';
+      return h;
+    }
+  </script>
+</Layout>

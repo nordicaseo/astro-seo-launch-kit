@@ -1,0 +1,24 @@
+{
+  "name": "@astro-seo-launch-kit/audit",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Automated SEO audit engine + CLI for Astro sites on Cloudflare/Vercel. Runs the Astro SEO Launch Kit checklist against a live URL.",
+  "bin": {
+    "astro-seo-audit": "./cli.mjs"
+  },
+  "exports": {
+    ".": "./lib/index.mjs"
+  },
+  "main": "./lib/index.mjs",
+  "scripts": {
+    "audit": "node cli.mjs"
+  },
+  "engines": {
+    "node": ">=18.18"
+  },
+  "dependencies": {
+    "node-html-parser": "^6.1.13",
+    "picocolors": "^1.1.1"
+  },
+  "files": ["lib", "cli.mjs"]
+}
