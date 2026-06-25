@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { runAudit } from '@astro-seo-launch-kit/audit';
+import { runAudit } from 'astro-seo-audit';
 import { getEnv } from '../../lib/auth';
 
 export const prerender = false;

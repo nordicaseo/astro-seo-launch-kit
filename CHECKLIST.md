@@ -7,7 +7,7 @@ Built and maintained by [Nordica Marketing](https://www.nordicamarketing.com). F
 **Legend:** 🔴 Critical · 🟠 High · 🟡 Medium · ⚪ Low &nbsp;|&nbsp; 🤖 auto-checked by the tool · 👤 manual review &nbsp;|&nbsp; stage: `build` → `pre-launch` → `post-launch`
 
 **How to use this:**
-1. Build your Astro site, then run `npx @astro-seo-launch-kit/audit https://your-site.com` (see [the repo](./README.md)).
+1. Build your Astro site, then run `npx astro-seo-audit https://your-site.com` (see [the repo](./README.md)).
 2. Work top-down — 🔴 items are launch blockers.
 3. For the *why*, the Astro fix, and exact verification, see [**docs/RULES.md**](./docs/RULES.md).
 

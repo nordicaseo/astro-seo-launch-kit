@@ -23,7 +23,7 @@ From the kit directory (or with the published package):
 
 ```bash
 node audit/cli.mjs https://the-site.com --json --html
-# or, if installed:  npx @astro-seo-launch-kit/audit https://the-site.com --json
+# or, if installed:  npx astro-seo-audit https://the-site.com --json
 # add real Core Web Vitals:  --psi-key=$PAGESPEED_API_KEY   (or set PAGESPEED_API_KEY)
 ```
 

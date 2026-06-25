@@ -11,7 +11,7 @@
     "start": "node ./dist/server/entry.mjs"
   },
   "dependencies": {
-    "@astro-seo-launch-kit/audit": "*",
+    "astro-seo-audit": "*",
     "@astrojs/node": "^11.0.0",
     "astro": "^7.0.2"
   }

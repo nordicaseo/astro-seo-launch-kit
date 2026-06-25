@@ -1,5 +1,5 @@
 {
-  "name": "@astro-seo-launch-kit/audit",
+  "name": "astro-seo-audit",
   "type": "module",
   "version": "1.0.0",
   "description": "Automated SEO audit engine + CLI for Astro sites on Cloudflare/Vercel. Runs the Astro SEO Launch Kit checklist against a live URL.",

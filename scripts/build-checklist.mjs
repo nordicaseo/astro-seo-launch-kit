@@ -26,7 +26,7 @@ cl += `> The complete, current, **myth-free** SEO checklist for launching an [As
 cl += `Built and maintained by [Nordica Marketing](https://www.nordicamarketing.com). Free to use. Pairs with the included **CLI auditor** and **login dashboard** that verify most of this list for you automatically.\n\n`;
 cl += `**Legend:** ${SEV.critical} Critical · ${SEV.high} High · ${SEV.medium} Medium · ${SEV.low} Low &nbsp;|&nbsp; 🤖 auto-checked by the tool · 👤 manual review &nbsp;|&nbsp; stage: \`build\` → \`pre-launch\` → \`post-launch\`\n\n`;
 cl += `**How to use this:**\n`;
-cl += `1. Build your Astro site, then run \`npx @astro-seo-launch-kit/audit https://your-site.com\` (see [the repo](./README.md)).\n`;
+cl += `1. Build your Astro site, then run \`npx astro-seo-audit https://your-site.com\` (see [the repo](./README.md)).\n`;
 cl += `2. Work top-down — ${SEV.critical} items are launch blockers.\n`;
 cl += `3. For the *why*, the Astro fix, and exact verification, see [**docs/RULES.md**](./docs/RULES.md).\n\n`;
 
